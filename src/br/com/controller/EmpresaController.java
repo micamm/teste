@@ -1,4 +1,4 @@
-package br.com.adm.clinica.controller;
+package br.com.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;

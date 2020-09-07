@@ -1,4 +1,4 @@
-package br.com.adm.clinica.controller;
+package br.com.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
