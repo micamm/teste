@@ -1,0 +1,82 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</h:head>
+<h:body>
+	<h:form id="form">
+				<div class="jumbotron">
+					<div class="col-sm-12">
+						<h2>Lista de fornecedores</h2>
+			
+						<h:commandLink
+							action="#{fornecedorController.chamarNovaEmpresa()}"
+							value="Nova Empresa / " />
+						<h:commandLink
+							action="#{fornecedorController.chamarNovoFornecedor()}"
+							value="/ Novo Fornecedor" />
+					</div>
+				</div>
+        				<div class="col-md-12">
+            				<div class="row">
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+						<h:inputText value="#{fornecedorController.pesquisa}"
+							class="form-control" />
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="float: right;">
+						<h:selectOneMenu value="#{fornecedorController.tipoFiltro}">
+							<f:selectItem itemLabel="EMPRESA" itemValue="1" />
+							<f:selectItem itemLabel="NOME" itemValue="2" />
+							<f:selectItem itemLabel="CPF" itemValue="3" />
+							<f:selectItem itemLabel="CNPJ" itemValue="4" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="float: right; margin-bottom: 5px;">
+						<h:commandButton action="#{fornecedorController.filtrar()}"
+							value="pesquisar" class="btn btn-primary"/>
+					</div>
+					</div>
+					</div>
+					
+					<h:dataTable value="#{fornecedorController.fornecedores}"
+						var="fornecedor" class="table">
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							<h:outputText value="#{fornecedor.nome}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">CNPJ</f:facet>
+							<h:outputText value="#{fornecedor.cnpj}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">CPF</f:facet>
+							<h:outputText value="#{fornecedor.cpf}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">RG</f:facet>
+							<h:outputText value="#{fornecedor.rg}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">DATA CADASTRO</f:facet>
+							<h:outputText value="#{fornecedor.dataCadastro}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">DATA NASCIMENTO</f:facet>
+							<h:outputText value="#{fornecedor.dataNascimento}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">EMPRESA</f:facet>
+							<h:outputText value="#{fornecedor.empresa.nome}" />
+						</h:column>
+
+					</h:dataTable>
+	</h:form>
+</h:body>
+</html>

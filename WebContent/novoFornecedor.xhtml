@@ -1,0 +1,89 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+</h:head>
+<h:body>
+<h:form id="form">
+<div class="jumbotron">
+	<div class="col-sm-12">
+  <h1 class="display-4">Cadastro de fornecedor</h1>
+  </div>
+  </div>
+<div class="container">
+
+	<div class="row">
+	<h:messages />
+	<h:panelGroup>
+	<div class="col-sm-4" >
+		<h:outputText value="FORNECEDOR JURIDICO" style="font-weight: bold;"/>
+		<h:selectBooleanCheckbox value="#{fornecedorController.fornecedorJuridico}" >
+			<f:ajax event="click" render="form" />
+		</h:selectBooleanCheckbox>
+	</div>
+	<div class="col-sm-8" >
+		<h:outputText value="EMPRESA" style="font-weight: bold;"/>
+		<h:selectOneMenu value="#{fornecedorController.idEmpresa}">
+			<f:selectItems value="#{fornecedorController.empresas}" var="empresa" itemLabel="#{empresa.nome}" itemValue="#{empresa.id}"/>
+		</h:selectOneMenu>
+	</div>
+	<div class="col-sm-4" >
+		<h:outputText value="NOME" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{fornecedorController.fornecedor.nome}" required="true" requiredMessage="campo nome obrigatório" class="form-control"/>
+	</div>
+	<h:panelGroup rendered="#{fornecedorController.fornecedorJuridico == false}">
+	<div class="col-sm-4">	
+		<h:outputText value="CPF" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{fornecedorController.fornecedor.cpf}" required="true" requiredMessage="campo cpf obrigatório" class="form-control cpf" id="cpf">
+		</h:inputText>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="RG" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;" rendered="#{fornecedorController.fornecedorJuridico == false}"/>
+		<h:inputText value="#{fornecedorController.fornecedor.rg}" class="form-control rg" required="#{fornecedorController.fornecedorJuridico == false}" requiredMessage="campo rg obrigatório"/>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="DATA NASCIMENTO" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;" rendered="#{fornecedorController.fornecedorJuridico == false}"/>
+		<h:inputText value="#{fornecedorController.fornecedor.dataNascimento}" class="form-control data" required="#{fornecedorController.fornecedorJuridico == false}" requiredMessage="campo data nascimento obrigatório"/>
+	</div>
+	</h:panelGroup>
+	<div class="col-sm-4">	
+		<h:outputText value="TELEFONE" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{fornecedorController.telefone}" class="form-control telefone" required="true" requiredMessage="campo telefone obrigatório"/>
+		<h:commandLink action="#{fornecedorController.adicionarTelefone()}" value="add telefone" />
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="CNPJ *" style="font-weight: bold; #{fornecedorController.fornecedorJuridico == true ? 'display : block' : 'display : none'}"/>
+		<h:inputText value="#{fornecedorController.fornecedor.cnpj}" style="#{fornecedorController.fornecedorJuridico == true ? 'display : block' : 'display : none'}" class="form-control cnpj" required="#{fornecedorController.fornecedorJuridico == true}" requiredMessage="campo cnpj obrigatório"/>
+	</div>
+	<div class="col-sm-12">	
+		<h:commandButton actionListener="#{fornecedorController.salvar}" value="salvar" class="btn btn-primary" />
+		
+		<h:commandButton actionListener="#{fornecedorController.voltar()}" value="cancelar" class="btn btn-danger" immediate="true"/>
+	</div>
+	<i>os campos com * são obrigatórios</i>
+	</h:panelGroup>
+	</div>
+</div>
+</h:form>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script>
+    $(document).ready(function () { 
+        var $cpf = $(".cpf");
+        $cpf.mask('000.000.000-00', {reverse: true});
+        var $rg = $(".rg");
+        $rg.mask('00.000.000-0', {reverse: true});
+        var $cnpj = $(".cnpj");
+        $cnpj.mask('00.000.0000000-00', {reverse: true});
+        var $telefone = $(".telefone");
+        $telefone.mask('(00)00000-0000', {reverse: true});
+        var $data = $(".data");
+        $data.mask('00/00/0000', {reverse: true});
+    });
+</script>
+</h:body>
+</html>

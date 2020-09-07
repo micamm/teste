@@ -1,0 +1,68 @@
+<html xmlns="htp://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+</h:head>
+<h:body>
+<h:form id="form">
+<div class="jumbotron">
+	<div class="col-sm-12">
+  <h1 class="display-4">Cadastro de empresa</h1>
+  </div>
+  </div>
+<div class="container">
+
+	<div class="row">
+	<h:messages />
+	<h:panelGroup>
+	<div class="col-sm-4" >
+		<h:outputText value="NOME" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{empresaController.empresa.nome}" required="true" requiredMessage="campo nome obrigatório" class="form-control"/>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="CEP" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{empresaController.empresa.cep}" required="true" requiredMessage="campo cpf obrigatório" class="form-control" maxlength="8">
+			<f:ajax event="blur" execute="@this" listener="#{empresaController.pesquisaCep}" render="logradouro localidade uf" />
+		</h:inputText>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="CNPJ" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{empresaController.empresa.cnpj}" class="form-control cnpj" required="true" requiredMessage="campo cnpj obrigatório"/>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="UF" style="font-weight: bold;"/>
+		<h:inputText value="#{empresaController.empresa.uf}" class="form-control" id="uf"/>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="LOCALIDADE" style="font-weight: bold;"/>
+		<h:inputText value="#{empresaController.empresa.localidade}" class="form-control" id="localidade"/>
+	</div>
+	<div class="col-sm-4">	
+		<h:outputText value="LOGRADOURO" style="font-weight: bold;"/><h:outputText value=" *" style="color:red;"/>
+		<h:inputText value="#{empresaController.empresa.logradouro}" class="form-control" required="true" id="logradouro" requiredMessage="campo longradouro obrigatório"/>
+	</div>
+	<div class="col-sm-12">	
+		<h:commandButton actionListener="#{empresaController.salvar}" value="salvar" class="btn btn-primary" />
+		<h:outputText value="  " />
+		<h:commandButton actionListener="#{empresaController.voltar()}" value="cancelar" class="btn btn-danger" immediate="true" />
+		
+	</div>
+	<i>os campos com * são obrigatórios</i>
+	</h:panelGroup>
+	</div>
+</div>
+</h:form>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script>
+    $(document).ready(function () { 
+        var $cnpj = $(".cnpj");
+        $cnpj.mask('00.000.0000000-00', {reverse: true});
+    });
+</script>
+</h:body>
+</html>
